@@ -20,6 +20,13 @@ namespace OpenDataMvc.Controllers
         //{
         //    return new string[] { "value1", "value2" };
         //}
+        /// <summary>
+        /// 颱風RSS-中央氣象局
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// https://alerts.ncdr.nat.gov.tw/RssAtomFeed.ashx?AlertType=5
+        /// </remarks>
         public string Get()
         {
             //// To convert an XML node contained in string xml into a JSON string   
@@ -30,10 +37,11 @@ namespace OpenDataMvc.Controllers
             //// To convert JSON text contained in string json into an XML node
             //XmlDocument doc = JsonConvert.DeserializeXmlNode(json);
 
-            XmlDocument doc = new XmlDocument();
-
             string uri = @"https://alerts.ncdr.nat.gov.tw/RssAtomFeed.ashx";
+
+            XmlDocument doc = new XmlDocument();
             doc.LoadXml(httpService.GetResponse(uri));
+            doc.RemoveChild(doc.FirstChild);
 
             return JsonConvert.SerializeXmlNode(doc);
 
@@ -49,7 +57,12 @@ namespace OpenDataMvc.Controllers
         {
             //string uri = System.Web.HttpUtility.UrlEncode(id);
             string uri = id;
-            return httpService.GetResponse(uri);
+
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(httpService.GetResponse(uri));
+            doc.RemoveChild(doc.FirstChild);
+
+            return JsonConvert.SerializeXmlNode(doc);
         }
 
         // POST api/<controller>

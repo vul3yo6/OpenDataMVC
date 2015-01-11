@@ -10,7 +10,7 @@ namespace OpenDataMVC.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "Taiwan Open Data";
 
             return View();
         }
